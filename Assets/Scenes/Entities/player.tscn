@@ -84,6 +84,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_12j5o"]
 size = Vector2(8, 11)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qmeye"]
+size = Vector2(8, 6)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_61ot5"]
 animations = [{
 "frames": [{
@@ -135,14 +138,6 @@ animations = [{
 "loop": 1,
 "name": &"climb",
 "speed": 10.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("17_0y5yn")
-}],
-"loop": 1,
-"name": &"crouch",
-"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -207,9 +202,17 @@ animations = [{
 "duration": 1.0,
 "texture": ExtResource("36_6w1as")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"death",
-"speed": 10.0
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_0y5yn")
+}],
+"loop": 1,
+"name": &"duck",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -370,13 +373,16 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=2078793719]
+collision_layer = 2
 script = ExtResource("1_o8828")
-jump_strength = 300
-gravity = 1000
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=374478933]
+[node name="StandCollision" type="CollisionShape2D" parent="." unique_id=374478933]
 position = Vector2(0, -5.5)
 shape = SubResource("RectangleShape2D_12j5o")
+
+[node name="DuckCollision" type="CollisionShape2D" parent="." unique_id=1408085345]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_qmeye")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=579429474]
 zoom = Vector2(3, 3)
@@ -385,6 +391,5 @@ zoom = Vector2(3, 3)
 position = Vector2(5.9604645e-08, -11)
 scale = Vector2(0.6875, 0.6875)
 sprite_frames = SubResource("SpriteFrames_61ot5")
-animation = &"jump"
+animation = &"duck"
 autoplay = "idle"
-frame_progress = 0.1822473
