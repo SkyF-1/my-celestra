@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bs6ly4x82rdgd"]
+
+[ext_resource type="Script" uid="uid://cm8jyvn1f22og" path="res://Scripts/Entities/finish_flag.gd" id="1_aibis"]
+[ext_resource type="Texture2D" uid="uid://da8l3ub6bubhk" path="res://Assets/Graphics/Gameplay/finish_flag.png" id="1_gk57h"]
+[ext_resource type="AudioStream" uid="uid://wibbtby54t2v" path="res://Assets/Audio/Music/victory.ogg" id="2_u3cbk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12j5o"]
+size = Vector2(64, 30)
+
+[sub_resource type="LabelSettings" id="LabelSettings_12j5o"]
+
+[node name="FinishFlag" type="Area2D" unique_id=661704181]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_aibis")
+sfx_victory = ExtResource("2_u3cbk")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1292513739]
+position = Vector2(0, -16)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_gk57h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1046699327]
+position = Vector2(0, -4)
+scale = Vector2(0.25, 0.25)
+shape = SubResource("RectangleShape2D_12j5o")
+
+[node name="Prompt" type="Label" parent="." unique_id=1132638096]
+offset_left = -35.0
+offset_top = -64.0
+offset_right = 35.0
+offset_bottom = -41.0
+text = "按“E”登顶"
+label_settings = SubResource("LabelSettings_12j5o")

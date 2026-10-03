@@ -1,8 +1,14 @@
 [gd_scene format=4 uid="uid://c808ahca1eue4"]
 
-[ext_resource type="PackedScene" uid="uid://7wg7awsubdm6" path="res://Assets/Scenes/Entities/player.tscn" id="1_vcoxq"]
+[ext_resource type="PackedScene" uid="uid://7wg7awsubdm6" path="res://Scenes/Entities/player.tscn" id="1_vcoxq"]
+[ext_resource type="Script" uid="uid://exat280lbpsp" path="res://Scripts/Levels/test_level.gd" id="1_w244i"]
+[ext_resource type="AudioStream" uid="uid://vk1y6hxl3kx6" path="res://Assets/Audio/Music/gameplay_loop.ogg" id="2_slpwm"]
 [ext_resource type="Texture2D" uid="uid://ci45r4148kkw2" path="res://Assets/Graphics/World/Tilesets/terrain_cliff.png" id="2_t3b1k"]
-[ext_resource type="PackedScene" uid="uid://djyyi4575gk4p" path="res://Assets/Scenes/Entities/spikes.tscn" id="3_mscei"]
+[ext_resource type="PackedScene" uid="uid://djyyi4575gk4p" path="res://Scenes/Entities/spikes.tscn" id="3_mscei"]
+[ext_resource type="PackedScene" uid="uid://c3irhyqm5ilxc" path="res://Scenes/UI/pause_menu.tscn" id="3_x4x4f"]
+[ext_resource type="PackedScene" uid="uid://2wjarrouu8sd" path="res://Scenes/Entities/strawberry.tscn" id="6_k8g1k"]
+[ext_resource type="PackedScene" uid="uid://bs6ly4x82rdgd" path="res://Scenes/Entities/finish_flag.tscn" id="8_l7ek2"]
+[ext_resource type="PackedScene" uid="uid://dcaf3vfbk3vgw" path="res://Scenes/Entities/Campfire.tscn" id="9_7rivk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mscei"]
 texture = ExtResource("2_t3b1k")
@@ -195,6 +201,17 @@ physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_mscei")
 
 [node name="TestLevel" type="Node2D" unique_id=264406711]
+script = ExtResource("1_w244i")
+gameplay_loop = ExtResource("2_slpwm")
+
+[node name="FinishFlag" parent="." unique_id=661704181 instance=ExtResource("8_l7ek2")]
+unique_name_in_owner = true
+position = Vector2(92, 0)
+
+[node name="PauseMenu" parent="." unique_id=34742214 instance=ExtResource("3_x4x4f")]
+
+[node name="Strawberry" parent="." unique_id=936250778 instance=ExtResource("6_k8g1k")]
+position = Vector2(-75, -21)
 
 [node name="Layers" type="Node2D" parent="." unique_id=680376580]
 
@@ -210,7 +227,10 @@ position = Vector2(-17, 9)
 [node name="SpawnPoint" type="Node2D" parent="." unique_id=917355006]
 
 [node name="Spikes" parent="." unique_id=544394923 instance=ExtResource("3_mscei")]
-position = Vector2(0, 12)
+position = Vector2(4, 12)
 
 [node name="Spikes2" parent="." unique_id=950810470 instance=ExtResource("3_mscei")]
-position = Vector2(8, 12)
+position = Vector2(12, 12)
+
+[node name="Campfire" parent="." unique_id=561473208 instance=ExtResource("9_7rivk")]
+position = Vector2(-116, -24)

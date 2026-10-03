@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal died
+
 # ═══════════════════════════════════════════════════════
 # 状态定义
 # ═══════════════════════════════════════════════════════
@@ -50,6 +52,15 @@ enum State { NORMAL, DASH, CLIMB, DEAD}
 @export var duck_friction := 500.0
 @onready var stand_col: CollisionShape2D = $StandCollision
 @onready var duck_col: CollisionShape2D = $DuckCollision
+
+@export_group("音频")
+@export var sfx_jump: AudioStream
+@export var sfx_dash: AudioStream
+@export var sfx_death: AudioStream
+@export var sfx_land: AudioStream
+@export var sfx_wall_jump: AudioStream
+@export var sfx_wall_release: AudioStream
+@export var sfx_climb_ledge: AudioStream
 
 # ═══════════════════════════════════════════════════════
 # 状态机
@@ -113,8 +124,15 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if is_dying:
 		return
-	
+
+	if Input.is_action_just_pressed("reset"):
+		die()
+		return;
+
 	on_ground = is_on_floor()
+	
+	if on_ground and not was_on_ground:
+		AudioManager.play_sfx(sfx_land)
 
 	_read_input()
 	_update_common_timers(delta)
@@ -206,7 +224,13 @@ func _normal_update(delta: float) -> State:
 		if on_ground or jump_grace_timer > 0.0:
 			_do_jump()
 		elif is_on_wall():
-			_do_wall_jump()
+			var wall_dir := _get_wall_dir()
+			if wall_dir == 0:
+				pass
+			elif Input.is_action_pressed("grab") and stamina > 0.0:
+				_do_climb_jump()
+			else:
+				_do_wall_jump()   
 
 	# 4. 水平移动
 	_apply_horizontal(delta)
@@ -231,6 +255,7 @@ func _normal_end() -> void:
 func _dash_begin() -> void:
 	if is_ducking:
 		_set_ducking(false)
+	AudioManager.play_sfx(sfx_dash)
 	var dir := Vector2(input_x, input_y)
 	if dir == Vector2.ZERO:
 		dir = Vector2(facing, 0)
@@ -274,15 +299,25 @@ func _climb_begin() -> void:
 		_set_ducking(false)
 	velocity.x = 0.0
 	velocity.y *= 0.2   # 抓墙瞬间 Y 速度衰减
+	var wall_dir := _get_wall_dir()
+	if wall_dir != 0:
+		for i in range(2):
+			if move_and_collide(Vector2(wall_dir, 0)):
+				break
 
 func _climb_update(delta: float) -> State:
 	# 1. 松抓键 → 离开
 	if not Input.is_action_pressed("grab"):
+		AudioManager.play_sfx(sfx_wall_release)
 		return State.NORMAL
 
 	# 2. 跳
 	if jump_buffer_timer > 0.0:
-		_do_jump()
+		var jump_wall_dir := _get_wall_dir()
+		if jump_wall_dir != 0 and input_x == float(-jump_wall_dir):
+			_do_wall_jump()
+		else:
+			_do_climb_jump()
 		return State.NORMAL
 
 	# 3. 冲刺
@@ -333,19 +368,19 @@ func _can_start_climb() -> bool:
 	return _get_wall_dir() != 0
 
 func _get_wall_dir() -> int:
+	var dir := facing
 	var space := get_world_2d().direct_space_state
 	var origin := global_position + Vector2(0, -5.5)   # 玩家中心
 	var probe := 6.0                                    # 探测距离（像素）
 
-	for dir in [1, -1]:
-		var query := PhysicsRayQueryParameters2D.create(
-			origin,
-			origin + Vector2(dir * probe, 0)
-		)
-		query.collision_mask = collision_mask
-		query.exclude = [get_rid()]
-		if space.intersect_ray(query):
-			return dir   # 墙在 dir 方向
+	var query := PhysicsRayQueryParameters2D.create(
+		origin,
+		origin + Vector2(dir * probe, 0)
+	)
+	query.collision_mask = collision_mask
+	query.exclude = [get_rid()]
+	if space.intersect_ray(query):
+		return dir   # 墙在 dir 方向
 
 	return 0
 	
@@ -365,6 +400,7 @@ func _can_un_duck() -> bool:
 # 动作
 # ═══════════════════════════════════════════════════════
 func _do_jump() -> void:
+	AudioManager.play_sfx(sfx_jump)
 	jump_buffer_timer = 0.0
 	jump_grace_timer = 0.0
 	var_jump_timer = var_jump_time
@@ -375,11 +411,22 @@ func _do_jump() -> void:
 func _do_wall_jump() -> void:
 	var wall_dir := _get_wall_dir()
 	if wall_dir == 0: return
+	AudioManager.play_sfx(sfx_wall_jump)
 	jump_buffer_timer = 0.0
 	var_jump_timer = var_jump_time
 	var_jump_speed = jump_speed
 	velocity.x = -wall_dir * (max_run + jump_h_boost)
 	velocity.y = jump_speed
+
+func _do_climb_jump() -> void:
+	if not on_ground:
+		stamina = maxf(0.0, stamina - 27.5)
+	jump_buffer_timer = 0.0
+	jump_grace_timer = 0.0
+	var_jump_timer = var_jump_time
+	var_jump_speed = jump_speed
+	velocity.y = jump_speed
+	AudioManager.play_sfx(sfx_jump)
 	
 ## 通过此函数设定蹲伏状态，否则不能切换碰撞箱。
 func _set_ducking(value: bool) -> void:
@@ -451,6 +498,8 @@ func die() -> void:
 	if is_dying:
 		return
 	is_dying = true
+	died.emit()
+	AudioManager.play_sfx(sfx_death)
 	
 	sprite.play("death")
 	await sprite.animation_finished
@@ -467,6 +516,8 @@ func die() -> void:
 
 	is_dying = false
 	
+func set_spawn_point(pos: Vector2) -> void:
+	spawn_point = pos
 
 # ═══════════════════════════════════════════════════════
 # 动画

@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://c3irhyqm5ilxc"]
+
+[ext_resource type="Script" uid="uid://byl40a332vj7k" path="res://Scripts/UI/pause_menu.gd" id="1_kdnb7"]
+[ext_resource type="AudioStream" uid="uid://k1rkydej233x" path="res://Assets/Audio/UI/click.ogg" id="2_702e2"]
+[ext_resource type="AudioStream" uid="uid://c162wwd74tsqy" path="res://Assets/Audio/UI/pause.ogg" id="3_qyryt"]
+[ext_resource type="AudioStream" uid="uid://dha45mk3fbcan" path="res://Assets/Audio/UI/resume.ogg" id="4_23me3"]
+[ext_resource type="AudioStream" uid="uid://dey6kwfd4f0t0" path="res://Assets/Audio/UI/back.ogg" id="5_deree"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_12j5o"]
+font_size = 32
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=34742214]
+process_mode = 3
+script = ExtResource("1_kdnb7")
+click_sfx = ExtResource("2_702e2")
+pause_sfx = ExtResource("3_qyryt")
+resume_sfx = ExtResource("4_23me3")
+back_sfx = ExtResource("5_deree")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=914624844]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.61960787)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1271774459]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=146986642]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1164651563]
+layout_mode = 2
+text = "暂停"
+label_settings = SubResource("LabelSettings_12j5o")
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1767151187]
+layout_mode = 2
+text = "继续游戏"
+
+[node name="SettingsButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1271034519]
+layout_mode = 2
+text = "设置"
+
+[node name="MainMenuButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=49312535]
+layout_mode = 2
+text = "主菜单"

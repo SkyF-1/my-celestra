@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://2wjarrouu8sd"]
+
+[ext_resource type="Texture2D" uid="uid://bikwfodic3nah" path="res://Assets/Graphics/Gameplay/strawberry.png" id="1_b6emk"]
+[ext_resource type="Script" uid="uid://b2g4crkigihtp" path="res://Scripts/Entities/strawberry.gd" id="1_i8f7v"]
+[ext_resource type="AudioStream" uid="uid://dl61r1axofclf" path="res://Assets/Audio/SFX/strawberry_collect.ogg" id="2_collect"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_12j5o"]
+radius = 6.0827627
+
+[node name="Strawberry" type="Area2D" unique_id=1841302605]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_i8f7v")
+sfx_collect = ExtResource("2_collect")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=62371606]
+texture = ExtResource("1_b6emk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=361031294]
+shape = SubResource("CircleShape2D_12j5o")

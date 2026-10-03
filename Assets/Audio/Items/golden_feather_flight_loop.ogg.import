@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/golden_feather_flight_loop.ogg-b81b53071f9ad8
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

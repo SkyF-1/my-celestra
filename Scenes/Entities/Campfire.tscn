@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://dcaf3vfbk3vgw"]
+
+[ext_resource type="Texture2D" uid="uid://c4t3aatinhj16" path="res://Assets/Graphics/Gameplay/checkpoint_active.png" id="1_4ptku"]
+[ext_resource type="Script" uid="uid://d2uv5426eti8y" path="res://Scripts/Entities/campfire.gd" id="1_7o68m"]
+[ext_resource type="Texture2D" uid="uid://ckpmjmycpterh" path="res://Assets/Graphics/Gameplay/checkpoint_inactive.png" id="2_7o68m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12j5o"]
+size = Vector2(14, 2)
+
+[node name="Campfire" type="Area2D" unique_id=561473208]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_7o68m")
+texture_inactive = ExtResource("2_7o68m")
+texture_active = ExtResource("1_4ptku")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1057562830]
+position = Vector2(0, -16)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_7o68m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1391130323]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_12j5o")
+
+[node name="Prompt" type="Label" parent="." unique_id=979368079]
+offset_left = -35.0
+offset_top = -70.0
+offset_right = 35.0
+offset_bottom = -47.0
+text = "按“E”存档"
