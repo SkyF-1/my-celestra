@@ -514,6 +514,8 @@ func die() -> void:
 	stamina = climb_max_stamina
 	dashes = max_dashes
 
+	await get_tree().physics_frame
+	await get_tree().physics_frame
 	is_dying = false
 	
 func set_spawn_point(pos: Vector2) -> void:

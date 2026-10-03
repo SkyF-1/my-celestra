@@ -2,6 +2,8 @@ extends Area2D
 
 signal collected(strawberry: Area2D)
 
+const STRAWBERRY_GROUP := "strawberries"
+
 enum State { IDLE, FOLLOWING, COLLECTED }
 
 @export_group("跟随")
@@ -20,6 +22,7 @@ var _follow_velocity := Vector2.ZERO
 
 func _ready() -> void:
 	_spawn_position = global_position
+	add_to_group(STRAWBERRY_GROUP)
 	body_entered.connect(_on_body_entered)
 
 
@@ -41,6 +44,11 @@ func _physics_process(delta: float) -> void:
 	var decay := exp(-spring_frequency * delta)
 	global_position = target + (offset + spring_delta) * decay
 	_follow_velocity = (_follow_velocity - spring_frequency * spring_delta) * decay
+
+
+## Whether this strawberry is currently trailing the player but not yet collected.
+func is_following() -> bool:
+	return state == State.FOLLOWING
 
 
 ## Call when game logic confirms that this following strawberry has been collected.

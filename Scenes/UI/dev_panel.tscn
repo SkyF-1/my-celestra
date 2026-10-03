@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/UI/dev_panel.gd" id="1_devpnl"]
+
+[node name="DevPanel" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_devpnl")
+
+[node name="Window" type="PanelContainer" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 300.0
+offset_bottom = 168.0
+mouse_filter = 0
+
+[node name="VBox" type="VBoxContainer" parent="Window"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Title" type="Label" parent="Window/VBox"]
+layout_mode = 2
+text = "开发者工具（F1 显示/隐藏）"
+
+[node name="CollectStrawberriesButton" type="Button" parent="Window/VBox"]
+layout_mode = 2
+text = "收集跟随中的草莓"
+
+[node name="Status" type="Label" parent="Window/VBox"]
+layout_mode = 2
+text = "本局已收集 0 枚草莓"
+autowrap_mode = 2

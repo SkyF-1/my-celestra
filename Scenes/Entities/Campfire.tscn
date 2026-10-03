@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c4t3aatinhj16" path="res://Assets/Graphics/Gameplay/checkpoint_active.png" id="1_4ptku"]
 [ext_resource type="Script" uid="uid://d2uv5426eti8y" path="res://Scripts/Entities/campfire.gd" id="1_7o68m"]
 [ext_resource type="Texture2D" uid="uid://ckpmjmycpterh" path="res://Assets/Graphics/Gameplay/checkpoint_inactive.png" id="2_7o68m"]
+[ext_resource type="AudioStream" uid="uid://b81l6s08050d7" path="res://Assets/Audio/SFX/checkpoint.ogg" id="3_ckpt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_12j5o"]
 size = Vector2(14, 2)
@@ -13,6 +14,7 @@ collision_mask = 2
 script = ExtResource("1_7o68m")
 texture_inactive = ExtResource("2_7o68m")
 texture_active = ExtResource("1_4ptku")
+sfx_checkpoint = ExtResource("3_ckpt")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1057562830]
 position = Vector2(0, -16)
