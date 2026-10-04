@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="Talent" load_steps=3 format=3]
+
+[ext_resource type="Script" uid="uid://vwd3i3p3np23" path="res://Scripts/System/talent.gd" id="1_talent"]
+[ext_resource type="Texture2D" uid="uid://dv5i0lrxoy1yu" path="res://Assets/Graphics/Talents/haste.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_talent")
+talent_name = "加速"
+icon = ExtResource("2_icon")
+cost = 1
+max_level = 5
+description = "每级提升 10 点移动速度。"
+effect_key = "speed"
+per_level = 10.0

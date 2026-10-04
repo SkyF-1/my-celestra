@@ -1,6 +1,9 @@
 extends Node2D
 class_name Chunk
 
+## 区块统一加入的组，供需要判断"身处哪个地块"的对象（如草莓）查询。
+const GROUP := "chunk"
+
 ## 区块类型标识。生成器依据此字段决定区块的分池归属。
 ## 取值：ordinary / danger / checkpoint / talent_shop / item_shop / reward / finish
 @export var chunk_type := "ordinary"
@@ -11,6 +14,9 @@ class_name Chunk
 ## 从起点到本区块的向上深度。
 ## 起点为 0，向上每层 +1，横向扩展不变。
 var depth := 0
+
+func _enter_tree() -> void:
+	add_to_group(GROUP)
 
 ## 返回指定方向上的所有开口。
 ## 支持同一方向存在多个开口的情形。
@@ -47,3 +53,12 @@ func get_world_aabb() -> Rect2:
 ## 采用 AABB 近似检测，适用于标准尺寸区块的垂直堆叠场景。
 func overlaps_with(other: Chunk) -> bool:
 	return ChunkGeometry.aabb_overlap(get_world_aabb(), other.get_world_aabb())
+
+
+## 查询某个世界坐标落在哪个区块内。
+## 矩形是半开区间，边界上的点只会命中一个区块。
+static func find_at(tree: SceneTree, position: Vector2) -> Chunk:
+	for node in tree.get_nodes_in_group(GROUP):
+		if node is Chunk and node.get_world_aabb().has_point(position):
+			return node
+	return null

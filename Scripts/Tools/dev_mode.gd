@@ -21,6 +21,9 @@ extends CanvasLayer
 const PLAYER_GROUP := "player"
 const STRAWBERRY_GROUP := "strawberries"
 const CAMERA_GROUP := "camera_rig"
+const TALENTS_GROUP := "talents"
+const LEDGER_GROUP := "strawberry_ledger"
+const BELT_GROUP := "item_belt"
 
 ## 传送落点被占用时，向上逐格寻找空位的步长与上限（像素）。
 const TELEPORT_SCAN_STEP := 8.0
@@ -41,9 +44,16 @@ const TELEPORT_SCAN_LIMIT := 160.0
 @onready var stamina_bar: ProgressBar = $Window/VBox/StaminaBar
 @onready var dash_label: Label = $Window/VBox/DashLabel
 @onready var dash_bar: ProgressBar = $Window/VBox/DashBar
+@onready var talent_label: Label = $Window/VBox/TalentLabel
+@onready var grant_talent_button: Button = $Window/VBox/GrantTalentButton
+@onready var add_strawberry_button: Button = $Window/VBox/AddStrawberryButton
+@onready var item_label: Label = $Window/VBox/ItemLabel
 
 var _player: CharacterBody2D = null
 var _camera_rig: CameraRig = null
+var _talents: Talents = null
+var _ledger: StrawberryLedger = null
+var _belt: ItemBelt = null
 var _dragging := false
 var _panning := false
 var _collected_count := 0
@@ -63,9 +73,12 @@ func _ready() -> void:
 	teleport_check.toggled.connect(_on_teleport_toggled)
 	free_camera_check.toggled.connect(_on_free_camera_toggled)
 	collect_button.pressed.connect(_on_collect_strawberries_pressed)
+	grant_talent_button.pressed.connect(_on_grant_talent_pressed)
+	add_strawberry_button.pressed.connect(_on_add_strawberry_pressed)
 	window_panel.gui_input.connect(_on_window_gui_input)
 	_acquire_player()
 	_acquire_camera()
+	_acquire_systems()
 
 
 func _physics_process(_delta: float) -> void:
@@ -74,6 +87,9 @@ func _physics_process(_delta: float) -> void:
 		_acquire_player()
 	if not is_instance_valid(_camera_rig):
 		_acquire_camera()
+	if not is_instance_valid(_talents) or not is_instance_valid(_ledger) \
+			or not is_instance_valid(_belt):
+		_acquire_systems()
 	_refresh_player_stats()
 
 
@@ -230,6 +246,99 @@ func _refresh_player_stats() -> void:
 		dash_bar.max_value = max_dashes
 		dash_bar.value = dashes
 		dash_label.text = "冲刺 %d / %d" % [dashes, max_dashes]
+
+
+# ═══════════════════════════════════════════════════════
+# 天赋 / 草莓
+# ═══════════════════════════════════════════════════════
+func _acquire_systems() -> void:
+	_talents = null
+	for node in get_tree().get_nodes_in_group(TALENTS_GROUP):
+		if node is Talents:
+			_talents = node
+			break
+	if is_instance_valid(_talents) and not _talents.changed.is_connected(_refresh_talent_readout):
+		_talents.changed.connect(_refresh_talent_readout)
+
+	_ledger = null
+	for node in get_tree().get_nodes_in_group(LEDGER_GROUP):
+		if node is StrawberryLedger:
+			_ledger = node
+			break
+
+	_belt = null
+	for node in get_tree().get_nodes_in_group(BELT_GROUP):
+		if node is ItemBelt:
+			_belt = node
+			break
+	if is_instance_valid(_belt) and not _belt.changed.is_connected(_refresh_item_readout):
+		_belt.changed.connect(_refresh_item_readout)
+
+	grant_talent_button.disabled = _talents == null
+	add_strawberry_button.disabled = _ledger == null
+	_refresh_talent_readout()
+	_refresh_item_readout()
+
+
+## 刷新"已获得天赋"读数。
+func _refresh_talent_readout() -> void:
+	if not is_instance_valid(_talents):
+		talent_label.text = "已获得天赋：—（未找到 Talents 组件）"
+		return
+
+	var parts: Array[String] = []
+	for talent in _talents.talent_pool:
+		var level := _talents.get_level(talent)
+		if level > 0:
+			parts.append("%s Lv%d" % [talent.talent_name, level])
+
+	if parts.is_empty():
+		talent_label.text = "已获得天赋：—"
+	else:
+		talent_label.text = "已获得天赋：" + "、".join(parts)
+
+
+## 白送一级随机天赋（只在未满级的天赋里挑）。
+func _on_grant_talent_pressed() -> void:
+	if not is_instance_valid(_talents):
+		return
+
+	var pool := _talents.get_available_talents()
+	if pool.is_empty():
+		_refresh_status("全部天赋都已满级。")
+		return
+
+	var talent: Talent = pool[randi() % pool.size()]
+	_talents.grant(talent, 1)
+	var level := _talents.get_level(talent)
+	print("[DevMode] 获得天赋「%s」Lv%d。" % [talent.talent_name, level])
+	_refresh_status("获得「%s」Lv%d（%d/%d）" % [
+		talent.talent_name, level, level, talent.max_level,
+	])
+	_refresh_talent_readout()
+
+
+## 刷新道具栏读数。
+func _refresh_item_readout() -> void:
+	if not is_instance_valid(_belt):
+		item_label.text = "道具栏：—（未找到 ItemBelt）"
+		return
+
+	var parts: Array[String] = []
+	for item_id in _belt.get_slots():
+		if item_id.is_empty():
+			parts.append("空")
+		else:
+			parts.append(str(ItemDrop.NAMES.get(item_id, item_id)))
+	item_label.text = "道具栏：" + "、".join(parts)
+
+
+## 加 10 枚草莓，方便测试商店购买。
+func _on_add_strawberry_pressed() -> void:
+	if not is_instance_valid(_ledger):
+		return
+	_ledger.add(10)
+	_refresh_status("草莓 +10，当前 %d 枚。" % _ledger.get_total())
 
 
 func _acquire_camera() -> void:

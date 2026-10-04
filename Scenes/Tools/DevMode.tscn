@@ -10,7 +10,7 @@ script = ExtResource("1_devmode")
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 320.0
-offset_bottom = 412.0
+offset_bottom = 552.0
 
 [node name="VBox" type="VBoxContainer" parent="Window" unique_id=61852999]
 layout_mode = 2
@@ -61,6 +61,24 @@ layout_mode = 2
 max_value = 1.0
 value = 1.0
 show_percentage = false
+
+[node name="TalentLabel" type="Label" parent="Window/VBox"]
+layout_mode = 2
+text = "已获得天赋：—"
+autowrap_mode = 2
+
+[node name="ItemLabel" type="Label" parent="Window/VBox"]
+layout_mode = 2
+text = "道具栏：—"
+autowrap_mode = 2
+
+[node name="GrantTalentButton" type="Button" parent="Window/VBox"]
+layout_mode = 2
+text = "给自己加天赋（随机 1 级）"
+
+[node name="AddStrawberryButton" type="Button" parent="Window/VBox"]
+layout_mode = 2
+text = "加 10 草莓"
 
 [node name="CollectStrawberriesButton" type="Button" parent="Window/VBox" unique_id=619697718]
 layout_mode = 2

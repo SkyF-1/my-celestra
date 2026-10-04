@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Talent" format=3 uid="uid://p1x4tjx7hrn1"]
+
+[ext_resource type="Script" uid="uid://vwd3i3p3np23" path="res://Scripts/System/talent.gd" id="1_talent"]
+[ext_resource type="Texture2D" uid="uid://c7k6o1eb3dgoj" path="res://Assets/Graphics/Talents/toughness.png" id="2_icon"]
+
+[resource]
+script = ExtResource("1_talent")
+talent_name = "坚韧"
+icon = ExtResource("2_icon")
+max_level = 5
+description = "每级增加 30 点体力上限。"
+effect_key = "stamina"
+per_level = 30.0
+metadata/TalentName = "坚韧"
+metadata/Cost = 1
+metadata/MaxLevel = 5
+metadata/Description = "每级增加30点体力上限。"
+metadata/EffectKey = "stamina"
+metadata/PerLevel = 30.0
+metadata/Icon = ExtResource("2_icon")

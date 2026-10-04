@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dbsbr16ss618r"]
+
+[ext_resource type="Script" uid="uid://3oxt4fyrbvnh" path="res://Scripts/UI/stats_hud.gd" id="1_stats"]
+
+[node name="StatsHud" type="CanvasLayer" unique_id=1551866903]
+layer = 50
+script = ExtResource("1_stats")
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=1123913914]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -201.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 47.0
+grow_horizontal = 0
+mouse_filter = 2
+
+[node name="VBox" type="HBoxContainer" parent="Panel" unique_id=2078349060]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="DepthLabel" type="Label" parent="Panel/VBox" unique_id=206572263]
+layout_mode = 2
+text = "层数 0"
+horizontal_alignment = 1
+
+[node name="BerryLabel" type="Label" parent="Panel/VBox" unique_id=1001974049]
+layout_mode = 2
+text = "草莓 0"
+horizontal_alignment = 1
+
+[node name="TalentMenu" type="MenuButton" parent="Panel/VBox" unique_id=973249523]
+layout_mode = 2
+text = "天赋 (0)"

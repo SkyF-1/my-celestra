@@ -7,22 +7,40 @@
 [ext_resource type="Script" uid="uid://cso10sx4taa56" path="res://Scripts/Chunks/chunk_generator.gd" id="4_ycsl2"]
 [ext_resource type="PackedScene" uid="uid://coni0ec0j8tsn" path="res://Scenes/Objects/camera_rig.tscn" id="5_rig"]
 [ext_resource type="PackedScene" uid="uid://b62k6bvfx6ssg" path="res://Scenes/Tools/DevMode.tscn" id="6_devmode"]
+[ext_resource type="Script" uid="uid://bcf5yqmcojtby" path="res://Scripts/System/strawberry_ledger.gd" id="7_ledger"]
+[ext_resource type="Script" uid="uid://gv6lwfpert7l" path="res://Scripts/System/talents.gd" id="8_talents"]
+[ext_resource type="Script" uid="uid://bqk2xvv2flhnd" path="res://Scripts/Objects/item_belt.gd" id="9_belt"]
+[ext_resource type="PackedScene" uid="uid://dbsbr16ss618r" path="res://Scenes/UI/stats_hud.tscn" id="10_stats"]
 
 [node name="TestLevelGenerated" type="Node2D" unique_id=1928782754]
 script = ExtResource("1_e3mx6")
 gameplay_loop = ExtResource("2_eqil6")
 
+[node name="System" type="Node" parent="." unique_id=419257945]
+
+[node name="ChunkGenerator" type="Node" parent="System" unique_id=1061298880 node_paths=PackedStringArray("chunks_container", "player")]
+unique_name_in_owner = true
+script = ExtResource("4_ycsl2")
+chunks_container = NodePath("../../Chunks")
+player = NodePath("../../Player")
+
+[node name="StrawberryLedger" type="Node" parent="System" unique_id=1178413377]
+script = ExtResource("7_ledger")
+
+[node name="ItemBelt" type="Node" parent="System" unique_id=901745207]
+script = ExtResource("9_belt")
+
+[node name="Talents" type="Node" parent="System" unique_id=109460948]
+script = ExtResource("8_talents")
+
+[node name="DevMode" parent="System" unique_id=1297461342 instance=ExtResource("6_devmode")]
+
+[node name="PauseMenu" parent="System" unique_id=34742214 instance=ExtResource("3_eqil6")]
+
+[node name="StatsHud" parent="System" unique_id=736667821 instance=ExtResource("10_stats")]
+
 [node name="Chunks" type="Node2D" parent="." unique_id=1930274308]
 
 [node name="Player" parent="." unique_id=2078793719 instance=ExtResource("2_b3nh2")]
 
-[node name="PauseMenu" parent="." unique_id=34742214 instance=ExtResource("3_eqil6")]
-
 [node name="CameraRig" parent="." unique_id=826294344 instance=ExtResource("5_rig")]
-
-[node name="DevMode" parent="." unique_id=1297461342 instance=ExtResource("6_devmode")]
-
-[node name="ChunkGenerator" type="Node" parent="." unique_id=1061298880 node_paths=PackedStringArray("chunks_container", "player")]
-script = ExtResource("4_ycsl2")
-chunks_container = NodePath("../Chunks")
-player = NodePath("../Player")

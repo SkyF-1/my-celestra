@@ -2,7 +2,7 @@ extends Node2D
 
 @export var gameplay_loop: AudioStream
 
-@onready var generator: ChunkGenerator = $ChunkGenerator
+@onready var generator: ChunkGenerator = %ChunkGenerator
 
 
 func _ready() -> void:

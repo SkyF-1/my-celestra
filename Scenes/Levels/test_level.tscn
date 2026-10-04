@@ -12,6 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://bs1ed4kr2wjj2" path="res://Scenes/Chunks/Ordinary/ordinary_01.tscn" id="9_mvu5i"]
 [ext_resource type="PackedScene" uid="uid://b62k6bvfx6ssg" path="res://Scenes/Tools/DevMode.tscn" id="10_devmode"]
 [ext_resource type="PackedScene" uid="uid://coni0ec0j8tsn" path="res://Scenes/Objects/camera_rig.tscn" id="11_rig"]
+[ext_resource type="PackedScene" uid="uid://bkn3d06by3a8w" path="res://Scenes/Chunks/TalentShop/talent_shop_01.tscn" id="13_sufl4"]
+[ext_resource type="Script" uid="uid://bcf5yqmcojtby" path="res://Scripts/System/strawberry_ledger.gd" id="14_ledger"]
+[ext_resource type="Script" uid="uid://gv6lwfpert7l" path="res://Scripts/System/talents.gd" id="15_talents"]
+[ext_resource type="Script" uid="uid://bqk2xvv2flhnd" path="res://Scripts/Objects/item_belt.gd" id="16_belt"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/stats_hud.tscn" id="17_stats"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mscei"]
 texture = ExtResource("2_t3b1k")
@@ -216,12 +221,26 @@ position = Vector2(92, 0)
 
 [node name="PauseMenu" parent="." unique_id=34742214 instance=ExtResource("3_x4x4f")]
 
+[node name="StatsHud" parent="." instance=ExtResource("17_stats")]
+
+[node name="StrawberryLedger" type="Node" parent="." unique_id=151056967]
+script = ExtResource("14_ledger")
+
+[node name="Talents" type="Node" parent="." unique_id=297015491]
+script = ExtResource("15_talents")
+
+[node name="ItemBelt" type="Node" parent="." unique_id=1484472209]
+script = ExtResource("16_belt")
+
 [node name="CameraRig" parent="." unique_id=771120301 instance=ExtResource("11_rig")]
 
 [node name="DevMode" parent="." unique_id=238078793 instance=ExtResource("10_devmode")]
 
 [node name="Strawberry" parent="." unique_id=936250778 instance=ExtResource("6_k8g1k")]
 position = Vector2(-75, -21)
+
+[node name="TalentShop_01" parent="." unique_id=138608921 instance=ExtResource("13_sufl4")]
+position = Vector2(-448, -176)
 
 [node name="Campfire" parent="." unique_id=561473208 instance=ExtResource("9_7rivk")]
 position = Vector2(-116, -24)
