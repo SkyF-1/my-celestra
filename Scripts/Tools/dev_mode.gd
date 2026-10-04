@@ -12,6 +12,7 @@ extends CanvasLayer
 ##   鼠标左键点击传送 —— 开启后在场景中点击，把玩家瞬移到该处
 ##   自由移动相机    —— 相机解除与玩家的绑定：滚轮拖动平移、缩放
 ##   收集跟随中的草莓 —— 调试草莓收集流程
+## 面板还会实时显示玩家的体力条与冲刺次数。
 ##
 ## 依赖玩家脚本提供以下接口（见 Scripts/Entities/player.gd），且玩家需加入 "player" 分组：
 ##   invincible / flying / infinite_stamina 属性，teleport_to(pos) 方法。
@@ -36,12 +37,22 @@ const TELEPORT_SCAN_LIMIT := 160.0
 @onready var free_camera_check: CheckButton = $Window/VBox/FreeCameraCheck
 @onready var collect_button: Button = $Window/VBox/CollectStrawberriesButton
 @onready var status_label: Label = $Window/VBox/Status
+@onready var stamina_label: Label = $Window/VBox/StaminaLabel
+@onready var stamina_bar: ProgressBar = $Window/VBox/StaminaBar
+@onready var dash_label: Label = $Window/VBox/DashLabel
+@onready var dash_bar: ProgressBar = $Window/VBox/DashBar
 
 var _player: CharacterBody2D = null
 var _camera_rig: CameraRig = null
 var _dragging := false
 var _panning := false
 var _collected_count := 0
+
+# 读数缓存，只在数值真的变化时才写控件，避免每帧重排版。
+var _shown_stamina := -1
+var _shown_max_stamina := -1
+var _shown_dashes := -1
+var _shown_max_dashes := -1
 
 
 func _ready() -> void:
@@ -63,6 +74,7 @@ func _physics_process(_delta: float) -> void:
 		_acquire_player()
 	if not is_instance_valid(_camera_rig):
 		_acquire_camera()
+	_refresh_player_stats()
 
 
 func _input(event: InputEvent) -> void:
@@ -191,6 +203,33 @@ func _set_flags_enabled(enabled: bool) -> void:
 	fly_check.disabled = not enabled
 	stamina_check.disabled = not enabled
 	teleport_check.disabled = not enabled
+
+
+# ═══════════════════════════════════════════════════════
+# 玩家状态读数
+# ═══════════════════════════════════════════════════════
+## 把玩家的体力与冲刺次数同步到面板上的体力条 / 计数。
+func _refresh_player_stats() -> void:
+	if not is_instance_valid(_player):
+		return
+
+	var stamina := roundi(_player.stamina)
+	var max_stamina := roundi(_player.climb_max_stamina)
+	if stamina != _shown_stamina or max_stamina != _shown_max_stamina:
+		_shown_stamina = stamina
+		_shown_max_stamina = max_stamina
+		stamina_bar.max_value = max_stamina
+		stamina_bar.value = stamina
+		stamina_label.text = "体力 %d / %d" % [stamina, max_stamina]
+
+	var dashes: int = _player.dashes
+	var max_dashes: int = _player.max_dashes
+	if dashes != _shown_dashes or max_dashes != _shown_max_dashes:
+		_shown_dashes = dashes
+		_shown_max_dashes = max_dashes
+		dash_bar.max_value = max_dashes
+		dash_bar.value = dashes
+		dash_label.text = "冲刺 %d / %d" % [dashes, max_dashes]
 
 
 func _acquire_camera() -> void:

@@ -10,7 +10,7 @@ script = ExtResource("1_devmode")
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 320.0
-offset_bottom = 308.0
+offset_bottom = 412.0
 
 [node name="VBox" type="VBoxContainer" parent="Window" unique_id=61852999]
 layout_mode = 2
@@ -39,6 +39,28 @@ text = "鼠标左键点击传送"
 [node name="FreeCameraCheck" type="CheckButton" parent="Window/VBox" unique_id=491864005]
 layout_mode = 2
 text = "自由移动相机（滚轮拖动、缩放）"
+
+[node name="StaminaLabel" type="Label" parent="Window/VBox"]
+layout_mode = 2
+text = "体力 —"
+
+[node name="StaminaBar" type="ProgressBar" parent="Window/VBox"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+max_value = 110.0
+value = 110.0
+show_percentage = false
+
+[node name="DashLabel" type="Label" parent="Window/VBox"]
+layout_mode = 2
+text = "冲刺 —"
+
+[node name="DashBar" type="ProgressBar" parent="Window/VBox"]
+custom_minimum_size = Vector2(0, 14)
+layout_mode = 2
+max_value = 1.0
+value = 1.0
+show_percentage = false
 
 [node name="CollectStrawberriesButton" type="Button" parent="Window/VBox" unique_id=619697718]
 layout_mode = 2

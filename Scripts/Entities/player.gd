@@ -4,16 +4,14 @@ signal died
 
 const PLAYER_GROUP := "player"
 
-# ═══════════════════════════════════════════════════════
-# 状态定义
-# ═══════════════════════════════════════════════════════
 enum State { NORMAL, DASH, CLIMB, DEAD}
 
-# ═══════════════════════════════════════════════════════
-# 参数（Celeste 原值）
-# ═══════════════════════════════════════════════════════
+@export_group("基础属性")
+@export var base_max_run := 90.0
+@export var base_max_stamina := 110.0
+@export var base_max_dashes := 1
+
 @export_group("水平移动")
-@export var max_run := 90.0
 @export var run_accel := 1000.0
 @export var run_reduce := 400.0
 @export var air_mult := 0.65
@@ -38,13 +36,11 @@ enum State { NORMAL, DASH, CLIMB, DEAD}
 @export var dash_time := 0.15
 @export var dash_cooldown := 0.2
 @export var dash_refill_cooldown := 0.1
-@export var max_dashes := 1
 
 @export_group("爬墙")
 @export var climb_up_speed := -45.0
 @export var climb_down_speed := 80.0
 @export var climb_accel := 900.0
-@export var climb_max_stamina := 110.0
 
 @export_group("墙滑")
 @export var wall_slide_start_max := 20.0
@@ -63,6 +59,19 @@ enum State { NORMAL, DASH, CLIMB, DEAD}
 @export var sfx_wall_jump: AudioStream
 @export var sfx_wall_release: AudioStream
 @export var sfx_climb_ledge: AudioStream
+
+# ─────────────────────────────────────────────────────
+# 天赋 / 道具修正
+# ─────────────────────────────────────────────────────
+var run_bonus := 0.0
+var stamina_bonus := 0.0
+var dashes_bonus := 0
+
+var max_run := base_max_run
+var climb_max_stamina := base_max_stamina
+var max_dashes := base_max_dashes
+
+var strawberry_can_enabled := false
 
 # ═══════════════════════════════════════════════════════
 # 状态机
@@ -132,6 +141,7 @@ var infinite_stamina := false
 # ═══════════════════════════════════════════════════════
 func _ready() -> void:
 	spawn_point = global_position
+	recalc_stats()
 	dashes = max_dashes
 	stamina = climb_max_stamina
 	current_max_fall = max_fall
@@ -220,6 +230,12 @@ func _state_end(s: State) -> void:
 		State.DASH: _dash_end()
 		State.CLIMB: _climb_end()
 
+## 依据基础值与修正值重新计算属性。
+func recalc_stats() -> void:
+	max_run = base_max_run + run_bonus
+	climb_max_stamina = base_max_stamina + stamina_bonus
+	max_dashes = base_max_dashes + dashes_bonus
+	
 # ═══════════════════════════════════════════════════════
 # NORMAL 状态
 # ═══════════════════════════════════════════════════════
@@ -419,7 +435,8 @@ func _can_un_duck() -> bool:
 	query.exclude = [get_rid()]
 	var result := space.intersect_shape(query, 1)
 	return result.is_empty()
-
+	
+	
 # ═══════════════════════════════════════════════════════
 # 动作
 # ═══════════════════════════════════════════════════════
