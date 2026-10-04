@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Objects/shop_bubble.gd" id="1_bubble"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bubble"]
+radius = 8.0
+
+[node name="ShopBubble" type="Area2D"]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1_bubble")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bubble")
+
+[node name="Price" type="Label" parent="."]
+offset_left = -24.0
+offset_top = -30.0
+offset_right = 24.0
+offset_bottom = -12.0
+horizontal_alignment = 1
+text = "1"

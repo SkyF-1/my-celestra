@@ -4,13 +4,14 @@
 [ext_resource type="Script" uid="uid://exat280lbpsp" path="res://Scripts/Levels/test_level.gd" id="1_w244i"]
 [ext_resource type="AudioStream" uid="uid://vk1y6hxl3kx6" path="res://Assets/Audio/Music/gameplay_loop.ogg" id="2_slpwm"]
 [ext_resource type="Texture2D" uid="uid://ci45r4148kkw2" path="res://Assets/Graphics/World/Tilesets/terrain_cliff.png" id="2_t3b1k"]
-[ext_resource type="PackedScene" uid="uid://djyyi4575gk4p" path="res://Scenes/Entities/spikes.tscn" id="3_mscei"]
+[ext_resource type="PackedScene" uid="uid://djyyi4575gk4p" path="res://Scenes/Objects/spikes.tscn" id="3_mscei"]
 [ext_resource type="PackedScene" uid="uid://c3irhyqm5ilxc" path="res://Scenes/UI/pause_menu.tscn" id="3_x4x4f"]
-[ext_resource type="PackedScene" uid="uid://2wjarrouu8sd" path="res://Scenes/Entities/strawberry.tscn" id="6_k8g1k"]
-[ext_resource type="PackedScene" uid="uid://bs6ly4x82rdgd" path="res://Scenes/Entities/finish_flag.tscn" id="8_l7ek2"]
-[ext_resource type="PackedScene" uid="uid://dcaf3vfbk3vgw" path="res://Scenes/Entities/Campfire.tscn" id="9_7rivk"]
+[ext_resource type="PackedScene" uid="uid://2wjarrouu8sd" path="res://Scenes/Objects/strawberry.tscn" id="6_k8g1k"]
+[ext_resource type="PackedScene" uid="uid://bs6ly4x82rdgd" path="res://Scenes/Objects/finish_flag.tscn" id="8_l7ek2"]
+[ext_resource type="PackedScene" uid="uid://dcaf3vfbk3vgw" path="res://Scenes/Objects/campfire.tscn" id="9_7rivk"]
 [ext_resource type="PackedScene" uid="uid://bs1ed4kr2wjj2" path="res://Scenes/Chunks/Ordinary/ordinary_01.tscn" id="9_mvu5i"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/dev_panel.tscn" id="10_devpnl"]
+[ext_resource type="PackedScene" uid="uid://b62k6bvfx6ssg" path="res://Scenes/Tools/DevMode.tscn" id="10_devmode"]
+[ext_resource type="PackedScene" uid="uid://coni0ec0j8tsn" path="res://Scenes/Objects/camera_rig.tscn" id="11_rig"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mscei"]
 texture = ExtResource("2_t3b1k")
@@ -215,7 +216,9 @@ position = Vector2(92, 0)
 
 [node name="PauseMenu" parent="." unique_id=34742214 instance=ExtResource("3_x4x4f")]
 
-[node name="DevPanel" parent="." unique_id=238078793 instance=ExtResource("10_devpnl")]
+[node name="CameraRig" parent="." unique_id=771120301 instance=ExtResource("11_rig")]
+
+[node name="DevMode" parent="." unique_id=238078793 instance=ExtResource("10_devmode")]
 
 [node name="Strawberry" parent="." unique_id=936250778 instance=ExtResource("6_k8g1k")]
 position = Vector2(-75, -21)

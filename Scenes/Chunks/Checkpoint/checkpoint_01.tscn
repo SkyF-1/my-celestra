@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="PackedScene" uid="uid://b35j05dr3m7r0" path="res://Scenes/Chunks/chunk_base.tscn" id="1_base"]
+[ext_resource type="PackedScene" uid="uid://dcaf3vfbk3vgw" path="res://Scenes/Objects/campfire.tscn" id="2_campfire"]
+
+[node name="Checkpoint_01" instance=ExtResource("1_base")]
+chunk_type = "checkpoint"
+
+[node name="Campfire" parent="Contents" index="0" instance=ExtResource("2_campfire")]
+position = Vector2(72, 152)

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://drxw464jacybf"]
+
+[ext_resource type="PackedScene" uid="uid://b35j05dr3m7r0" path="res://Scenes/Chunks/chunk_base.tscn" id="1_base"]
+[ext_resource type="PackedScene" path="res://Scenes/Objects/item_drop.tscn" id="2_itemdrop"]
+
+[node name="Reward_01" unique_id=2124759656 instance=ExtResource("1_base")]
+chunk_type = "reward"
+
+[node name="ItemDrop" parent="Contents" parent_id_path=PackedInt32Array(518188463) index="0" unique_id=926357051 instance=ExtResource("2_itemdrop")]
+position = Vector2(228, 80)

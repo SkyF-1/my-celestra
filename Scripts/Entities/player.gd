@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 signal died
 
+const PLAYER_GROUP := "player"
+
 # ═══════════════════════════════════════════════════════
 # 状态定义
 # ═══════════════════════════════════════════════════════
@@ -110,6 +112,19 @@ var current_max_fall := 160.0
 # 下蹲
 var is_ducking := false
 
+# ═══════════════════════════════════════════════════════
+# 开发者模式（由 Scenes/Tools/DevMode.tscn 写入，正常游玩时保持默认值）
+# ═══════════════════════════════════════════════════════
+@export_group("开发者模式")
+## 飞行模式下的移动速度。
+@export var fly_speed := 180.0
+## 无敌：屏蔽一切死亡，包括 R 键自尽。
+var invincible := false
+## 飞行：无视重力，直接用方向键移动。
+var flying := false
+## 无限体力：抓墙不会力竭。
+var infinite_stamina := false
+
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 # ═══════════════════════════════════════════════════════
@@ -120,6 +135,7 @@ func _ready() -> void:
 	dashes = max_dashes
 	stamina = climb_max_stamina
 	current_max_fall = max_fall
+	add_to_group(PLAYER_GROUP)
 
 func _physics_process(delta: float) -> void:
 	if is_dying:
@@ -136,6 +152,11 @@ func _physics_process(delta: float) -> void:
 
 	_read_input()
 	_update_common_timers(delta)
+
+	# 开发者飞行：跳过状态机与重力，直接按方向键移动
+	if flying:
+		_apply_fly()
+		return
 
 	# 状态分派
 	var next := _update_state(delta)
@@ -170,6 +191,9 @@ func _update_common_timers(delta: float) -> void:
 		stamina = climb_max_stamina
 		if dash_refill_timer <= 0.0:
 			dashes = max_dashes
+
+	if infinite_stamina:
+		stamina = climb_max_stamina
 
 func _change_state(next: State) -> void:
 	_state_end(state)
@@ -493,9 +517,19 @@ func _apply_wall_slide(delta: float) -> void:
 
 	wall_slide_timer = maxf(0.0, wall_slide_timer - delta)
 	is_wall_sliding = true
-	
+
+## 开发者飞行：忽略重力与状态机，直接用方向键做八向移动。
+func _apply_fly() -> void:
+	if state != State.NORMAL:
+		_change_state(State.NORMAL)
+	velocity = Vector2(input_x, input_y).normalized() * fly_speed
+	move_and_slide()
+	on_ground = is_on_floor()
+	_update_sprite()
+	was_on_ground = on_ground
+
 func die() -> void:
-	if is_dying:
+	if is_dying or invincible:
 		return
 	is_dying = true
 	died.emit()
@@ -520,6 +554,18 @@ func die() -> void:
 	
 func set_spawn_point(pos: Vector2) -> void:
 	spawn_point = pos
+
+## 开发者模式的瞬移：清掉速度与残留状态，避免把冲刺/跳跃动量带到目标点。
+func teleport_to(pos: Vector2) -> void:
+	global_position = pos
+	velocity = Vector2.ZERO
+	var_jump_timer = 0.0
+	dash_timer = 0.0
+	dash_cooldown_timer = 0.0
+	jump_buffer_timer = 0.0
+	if state != State.NORMAL:
+		_change_state(State.NORMAL)
+	was_on_ground = false
 
 # ═══════════════════════════════════════════════════════
 # 动画

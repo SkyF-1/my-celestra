@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://2wjarrouu8sd"]
 
 [ext_resource type="Texture2D" uid="uid://bikwfodic3nah" path="res://Assets/Graphics/Gameplay/strawberry.png" id="1_b6emk"]
-[ext_resource type="Script" uid="uid://b2g4crkigihtp" path="res://Scripts/Entities/strawberry.gd" id="1_i8f7v"]
+[ext_resource type="Script" uid="uid://b2g4crkigihtp" path="res://Scripts/Objects/strawberry.gd" id="1_i8f7v"]
 [ext_resource type="AudioStream" uid="uid://dl61r1axofclf" path="res://Assets/Audio/SFX/strawberry_collect.ogg" id="2_collect"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_12j5o"]

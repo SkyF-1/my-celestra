@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dcaf3vfbk3vgw"]
 
 [ext_resource type="Texture2D" uid="uid://c4t3aatinhj16" path="res://Assets/Graphics/Gameplay/checkpoint_active.png" id="1_4ptku"]
-[ext_resource type="Script" uid="uid://d2uv5426eti8y" path="res://Scripts/Entities/campfire.gd" id="1_7o68m"]
+[ext_resource type="Script" uid="uid://d2uv5426eti8y" path="res://Scripts/Objects/campfire.gd" id="1_7o68m"]
 [ext_resource type="Texture2D" uid="uid://ckpmjmycpterh" path="res://Assets/Graphics/Gameplay/checkpoint_inactive.png" id="2_7o68m"]
 [ext_resource type="AudioStream" uid="uid://b81l6s08050d7" path="res://Assets/Audio/SFX/checkpoint.ogg" id="3_ckpt"]
 

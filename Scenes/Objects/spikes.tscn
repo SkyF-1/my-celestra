@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://djyyi4575gk4p"]
 
-[ext_resource type="Script" uid="uid://tisea4xltj23" path="res://Scripts/Entities/spikes.gd" id="1_urhli"]
+[ext_resource type="Script" uid="uid://tisea4xltj23" path="res://Scripts/Objects/spikes.gd" id="1_urhli"]
 [ext_resource type="Texture2D" uid="uid://ctr28s3ndsmxo" path="res://Assets/Graphics/World/Hazards/spikes_up.png" id="2_tfjtd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_61ot5"]

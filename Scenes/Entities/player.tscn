@@ -398,9 +398,6 @@ shape = SubResource("RectangleShape2D_12j5o")
 position = Vector2(0, -3)
 shape = SubResource("RectangleShape2D_qmeye")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=579429474]
-zoom = Vector2(3, 3)
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=509128354]
 position = Vector2(5.9604645e-08, -11)
 scale = Vector2(0.6875, 0.6875)

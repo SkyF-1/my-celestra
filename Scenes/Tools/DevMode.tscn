@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://b62k6bvfx6ssg"]
+
+[ext_resource type="Script" uid="uid://y08n33it0r1r" path="res://Scripts/Tools/dev_mode.gd" id="1_devmode"]
+
+[node name="DevMode" type="CanvasLayer" unique_id=1164919762]
+layer = 100
+script = ExtResource("1_devmode")
+
+[node name="Window" type="PanelContainer" parent="." unique_id=211170931]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 320.0
+offset_bottom = 308.0
+
+[node name="VBox" type="VBoxContainer" parent="Window" unique_id=61852999]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="Window/VBox" unique_id=421778302]
+layout_mode = 2
+text = "开发者面板（F1 显示/隐藏）"
+
+[node name="InvincibleCheck" type="CheckButton" parent="Window/VBox" unique_id=148165342]
+layout_mode = 2
+text = "无敌"
+
+[node name="FlyCheck" type="CheckButton" parent="Window/VBox" unique_id=840798165]
+layout_mode = 2
+text = "飞行"
+
+[node name="StaminaCheck" type="CheckButton" parent="Window/VBox" unique_id=1857113235]
+layout_mode = 2
+text = "无限体力"
+
+[node name="TeleportCheck" type="CheckButton" parent="Window/VBox" unique_id=1426028141]
+layout_mode = 2
+text = "鼠标左键点击传送"
+
+[node name="FreeCameraCheck" type="CheckButton" parent="Window/VBox" unique_id=491864005]
+layout_mode = 2
+text = "自由移动相机（滚轮拖动、缩放）"
+
+[node name="CollectStrawberriesButton" type="Button" parent="Window/VBox" unique_id=619697718]
+layout_mode = 2
+text = "收集跟随中的草莓"
+
+[node name="Status" type="Label" parent="Window/VBox" unique_id=640696937]
+layout_mode = 2
+text = "未找到玩家"
+autowrap_mode = 2

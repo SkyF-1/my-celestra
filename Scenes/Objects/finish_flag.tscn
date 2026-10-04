@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bs6ly4x82rdgd"]
 
-[ext_resource type="Script" uid="uid://cm8jyvn1f22og" path="res://Scripts/Entities/finish_flag.gd" id="1_aibis"]
+[ext_resource type="Script" uid="uid://cm8jyvn1f22og" path="res://Scripts/Objects/finish_flag.gd" id="1_aibis"]
 [ext_resource type="Texture2D" uid="uid://da8l3ub6bubhk" path="res://Assets/Graphics/Gameplay/finish_flag.png" id="1_gk57h"]
 [ext_resource type="AudioStream" uid="uid://wibbtby54t2v" path="res://Assets/Audio/Music/victory.ogg" id="2_u3cbk"]
 
