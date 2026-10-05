@@ -36,8 +36,8 @@ const CHUNK_POOLS := {
 ## 目前按类型等概率抽取，后续再接入权重/节律。
 const CORRIDOR_TYPES: Array[String] = ["ordinary", "danger", "talent_shop"]
 
-## 起点占位场景。后续会替换为专门的 starter 场景（无下开口）。
-const START_SCENE := preload("res://Scenes/Chunks/Checkpoint/checkpoint_01.tscn")
+## 山脚起点场景：稳定的平地，只有左右开口。
+const START_SCENE := preload("res://Scenes/Chunks/Starter/starter_01.tscn")
 
 ## 方向配对：某方向的开口，需要对接到对侧的开口。
 const OPPOSITE_SIDE := {
@@ -216,7 +216,28 @@ func _decide_type(is_upward: bool, new_depth: int) -> String:
 		return "exit"
 
 	exit_chance = minf(exit_chance + exit_chance_increment, 1.0)
-	return CORRIDOR_TYPES[rng.randi_range(0, CORRIDOR_TYPES.size() - 1)]
+	return _pick_corridor_type()
+
+
+## 抽取水平走廊的类型。天赋全部满级后不再抽到天赋商店。
+func _pick_corridor_type() -> String:
+	var maxed := _talents_all_maxed()
+	var candidates: Array[String] = []
+	for candidate in CORRIDOR_TYPES:
+		if candidate == "talent_shop" and maxed:
+			continue
+		candidates.append(candidate)
+	if candidates.is_empty():
+		return "ordinary"
+	return candidates[rng.randi_range(0, candidates.size() - 1)]
+
+
+## 场上天赋是否已全部满级；没有天赋组件时视为未满级。
+func _talents_all_maxed() -> bool:
+	for node in get_tree().get_nodes_in_group("talents"):
+		if node is Talents:
+			return node.all_maxed()
+	return false
 
 
 ## 从类型池中随机取一个变体场景。
@@ -281,6 +302,9 @@ func _spawn_player_in(start: Chunk) -> void:
 		player.teleport_to(target)
 	else:
 		player.global_position = target
+	# 未触碰篝火前的默认存档点即山脚。
+	if player.has_method("set_spawn_point"):
+		player.set_spawn_point(target)
 
 
 # ─────────────────────────────────────────────

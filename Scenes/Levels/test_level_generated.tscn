@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://gv6lwfpert7l" path="res://Scripts/System/talents.gd" id="8_talents"]
 [ext_resource type="Script" uid="uid://bqk2xvv2flhnd" path="res://Scripts/Objects/item_belt.gd" id="9_belt"]
 [ext_resource type="PackedScene" uid="uid://dbsbr16ss618r" path="res://Scenes/UI/stats_hud.tscn" id="10_stats"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/victory_menu.tscn" id="11_victory"]
 
 [node name="TestLevelGenerated" type="Node2D" unique_id=1928782754]
 script = ExtResource("1_e3mx6")
@@ -38,6 +39,8 @@ script = ExtResource("8_talents")
 [node name="PauseMenu" parent="System" unique_id=34742214 instance=ExtResource("3_eqil6")]
 
 [node name="StatsHud" parent="System" unique_id=736667821 instance=ExtResource("10_stats")]
+
+[node name="VictoryMenu" parent="System" instance=ExtResource("11_victory")]
 
 [node name="Chunks" type="Node2D" parent="." unique_id=1930274308]
 

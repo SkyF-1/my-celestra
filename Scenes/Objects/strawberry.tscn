@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bikwfodic3nah" path="res://Assets/Graphics/Gameplay/strawberry.png" id="1_b6emk"]
 [ext_resource type="Script" uid="uid://b2g4crkigihtp" path="res://Scripts/Objects/strawberry.gd" id="1_i8f7v"]
 [ext_resource type="AudioStream" uid="uid://dl61r1axofclf" path="res://Assets/Audio/SFX/strawberry_collect.ogg" id="2_collect"]
+[ext_resource type="AudioStream" uid="uid://0kgv3d62n6rj" path="res://Assets/Audio/SFX/strawberry_touch.ogg" id="3_touch"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_12j5o"]
 radius = 6.0827627
@@ -12,6 +13,7 @@ collision_layer = 8
 collision_mask = 2
 script = ExtResource("1_i8f7v")
 sfx_collect = ExtResource("2_collect")
+sfx_touch = ExtResource("3_touch")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=62371606]
 texture = ExtResource("1_b6emk")

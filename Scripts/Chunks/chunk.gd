@@ -5,7 +5,7 @@ class_name Chunk
 const GROUP := "chunk"
 
 ## 区块类型标识。生成器依据此字段决定区块的分池归属。
-## 取值：ordinary / danger / checkpoint / talent_shop / item_shop / reward / finish / exit
+## 取值：starter / ordinary / danger / checkpoint / talent_shop / item_shop / reward / finish / exit
 @export var chunk_type := "ordinary"
 
 ## 区块的标准尺寸（宽 × 高，像素）。

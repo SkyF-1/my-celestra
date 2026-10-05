@@ -17,7 +17,7 @@ func _ready() -> void:
 
 func _on_start() -> void:
 	AudioManager.play_sfx(click)
-	get_tree().change_scene_to_file("res://Scenes/Levels/test_level.tscn")
+	get_tree().change_scene_to_file("res://Scenes/Levels/test_level_generated.tscn")
 
 func _on_settings() -> void:
 	AudioManager.play_sfx(click)

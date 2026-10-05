@@ -13,6 +13,8 @@ enum State { IDLE, FOLLOWING, COLLECTED }
 
 @export_group("音频")
 @export var sfx_collect: AudioStream
+## 玩家碰到草莓（开始跟随）时播放。
+@export var sfx_touch: AudioStream
 
 @export_group("正式收集")
 ## 草莓不在区块内时（例如手搭的测试关卡）用来判定"已离开原处"的水平距离。
@@ -92,6 +94,7 @@ func _on_body_entered(body: Node2D) -> void:
 	_carrier = player
 	_follow_velocity = Vector2.ZERO
 	state = State.FOLLOWING
+	AudioManager.play_sfx(sfx_touch)
 	set_deferred("monitoring", false)
 	set_deferred("monitorable", false)
 	if player.has_signal("died"):

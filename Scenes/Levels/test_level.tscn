@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://gv6lwfpert7l" path="res://Scripts/System/talents.gd" id="15_talents"]
 [ext_resource type="Script" uid="uid://bqk2xvv2flhnd" path="res://Scripts/Objects/item_belt.gd" id="16_belt"]
 [ext_resource type="PackedScene" path="res://Scenes/UI/stats_hud.tscn" id="17_stats"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/victory_menu.tscn" id="18_victory"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mscei"]
 texture = ExtResource("2_t3b1k")
@@ -220,6 +221,8 @@ unique_name_in_owner = true
 position = Vector2(92, 0)
 
 [node name="PauseMenu" parent="." unique_id=34742214 instance=ExtResource("3_x4x4f")]
+
+[node name="VictoryMenu" parent="." instance=ExtResource("18_victory")]
 
 [node name="StatsHud" parent="." instance=ExtResource("17_stats")]
 

@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://c7kq3xqavmt2e"]
+
+[ext_resource type="Script" uid="uid://bq4m2vk8wezpr" path="res://Scripts/UI/victory_menu.gd" id="1_vic"]
+[ext_resource type="AudioStream" uid="uid://k1rkydej233x" path="res://Assets/Audio/UI/click.ogg" id="2_click"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_victory"]
+font_size = 40
+
+[node name="VictoryMenu" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_vic")
+click_sfx = ExtResource("2_click")
+
+[node name="Dim" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.65)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "登顶成功！"
+label_settings = SubResource("LabelSettings_victory")
+horizontal_alignment = 1
+
+[node name="Stats" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="RetryButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "再开一把"
+
+[node name="MainMenuButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "回到主菜单"

@@ -2,6 +2,9 @@ extends Area2D
 
 signal victory
 
+## 宣告胜利时通过该组广播，避免与具体关卡耦合。
+const VICTORY_LISTENER_GROUP := "victory_listener"
+
 @export var sfx_victory: AudioStream
 
 @onready var prompt: Label = $Prompt
@@ -37,6 +40,7 @@ func _trigger_victory() -> void:
 	prompt.visible = false
 	AudioManager.play_sfx(sfx_victory)
 	victory.emit()
+	get_tree().call_group(VICTORY_LISTENER_GROUP, "on_victory")
 
 func _is_player(body: Node2D) -> bool:
 	return body is CharacterBody2D and body.has_method("die")

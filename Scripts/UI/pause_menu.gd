@@ -9,6 +9,9 @@ extends CanvasLayer
 @onready var settings_button: Button = $CenterContainer/VBoxContainer/SettingsButton
 @onready var main_menu_button: Button = $CenterContainer/VBoxContainer/MainMenuButton
 
+## 打开时占用的模态组：组内存在可见界面时，暂停菜单不响应 ESC。
+const MODAL_GROUP := "modal_menu"
+
 func _ready() -> void:
 	resume_button.pressed.connect(_on_resume)
 	settings_button.pressed.connect(_on_settings)
@@ -16,12 +19,23 @@ func _ready() -> void:
 	hide()
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
-		if visible:
-			_on_resume()
-		else:
-			_open()
+	if not event.is_action_pressed("ui_cancel"):
+		return
+	# 胜利菜单等模态界面打开时，暂停菜单不可用。
+	if _modal_menu_open():
 		get_viewport().set_input_as_handled()
+		return
+	if visible:
+		_on_resume()
+	else:
+		_open()
+	get_viewport().set_input_as_handled()
+
+func _modal_menu_open() -> bool:
+	for node in get_tree().get_nodes_in_group(MODAL_GROUP):
+		if node is CanvasLayer and node.visible:
+			return true
+	return false
 
 func _open() -> void:
 	show()

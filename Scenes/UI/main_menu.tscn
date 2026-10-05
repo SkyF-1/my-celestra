@@ -3,23 +3,56 @@
 [ext_resource type="Script" uid="uid://cln5ogy06yffo" path="res://Scripts/UI/main_menu.gd" id="1_o14dv"]
 [ext_resource type="AudioStream" uid="uid://bt67n41v1eunx" path="res://Assets/Audio/Music/menu_loop.ogg" id="2_u7lva"]
 [ext_resource type="AudioStream" uid="uid://k1rkydej233x" path="res://Assets/Audio/UI/click.ogg" id="3_mrfpk"]
+[ext_resource type="Texture2D" uid="uid://bef8qkh3bw6x" path="res://Assets/Graphics/Background/layer_02_mountains.png" id="4_bg"]
+[ext_resource type="Texture2D" uid="uid://byceg2w62o5m4" path="res://Assets/Graphics/Background/layer_01_clouds.png" id="5_clouds"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_u7lva"]
 font_size = 40
 
 [node name="MainMenu" type="Control" unique_id=391526936]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_o14dv")
 menu_loop = ExtResource("2_u7lva")
 click = ExtResource("3_mrfpk")
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1419009474]
+[node name="Mountains" type="TextureRect" parent="." unique_id=2106091409]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource("4_bg")
+expand_mode = 1
+
+[node name="Clouds" type="TextureRect" parent="." unique_id=829596883]
+modulate = Color(1, 1, 1, 0.45)
 layout_mode = 0
-offset_left = 428.0
-offset_top = 184.0
-offset_right = 869.0
-offset_bottom = 565.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_clouds")
+expand_mode = 1
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1035312652]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.043137, 0.078431, 0.13, 0.502)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1419009474]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=819818127]
 layout_mode = 2
