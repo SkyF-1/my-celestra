@@ -3,7 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://ci45r4148kkw2" path="res://Assets/Graphics/World/Tilesets/terrain_cliff.png" id="1_hwkym"]
 [ext_resource type="Script" uid="uid://c6sxj74bl7ewx" path="res://Scripts/Chunks/chunk.gd" id="1_ludx8"]
 [ext_resource type="Texture2D" uid="uid://ci276nfyvxfo8" path="res://Assets/Graphics/World/Tilesets/terrain_snow.png" id="3_gbdb4"]
-[ext_resource type="Script" uid="uid://dmeuepu562hvb" path="res://Scripts/Chunks/opening_marker.gd" id="4_8et0v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ludx8"]
 texture = ExtResource("1_hwkym")
@@ -300,33 +299,6 @@ tile_set = SubResource("TileSet_hyk2w")
 physics_quadrant_size = 8
 
 [node name="Openings" type="Node2D" parent="." unique_id=837704689]
-
-[node name="Top" type="Marker2D" parent="Openings" unique_id=293670011]
-position = Vector2(160, 0)
-script = ExtResource("4_8et0v")
-width = 48.0
-metadata/_custom_type_script = "uid://dmeuepu562hvb"
-
-[node name="Left" type="Marker2D" parent="Openings" unique_id=758892264]
-position = Vector2(0, 135)
-script = ExtResource("4_8et0v")
-side = 2
-width = 32.0
-metadata/_custom_type_script = "uid://dmeuepu562hvb"
-
-[node name="Bottom" type="Marker2D" parent="Openings" unique_id=1749924724]
-position = Vector2(160, 184)
-script = ExtResource("4_8et0v")
-side = 1
-width = 48.0
-metadata/_custom_type_script = "uid://dmeuepu562hvb"
-
-[node name="Right" type="Marker2D" parent="Openings" unique_id=1832972935]
-position = Vector2(320, 135)
-script = ExtResource("4_8et0v")
-side = 3
-width = 32.0
-metadata/_custom_type_script = "uid://dmeuepu562hvb"
 
 [node name="Contents" type="Node2D" parent="." unique_id=518188463]
 

@@ -5,15 +5,14 @@ class_name Chunk
 const GROUP := "chunk"
 
 ## 区块类型标识。生成器依据此字段决定区块的分池归属。
-## 取值：ordinary / danger / checkpoint / talent_shop / item_shop / reward / finish
+## 取值：ordinary / danger / checkpoint / talent_shop / item_shop / reward / finish / exit
 @export var chunk_type := "ordinary"
 
 ## 区块的标准尺寸（宽 × 高，像素）。
 @export var chunk_size := Vector2(320, 180)
 
-## 从起点到本区块的向上深度。
-## 起点为 0，向上每层 +1，横向扩展不变。
-var depth := 0
+## 区块所在层数。起点为 1，从 exit 向上生成时 +1，横向扩展不变。
+var depth := 1
 
 func _enter_tree() -> void:
 	add_to_group(GROUP)
