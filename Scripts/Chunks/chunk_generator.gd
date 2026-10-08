@@ -83,8 +83,8 @@ const MATE_EPSILON := 3.0
 @export_group("其它")
 ## 随机种子；为 0 时每次运行随机。
 @export var rng_seed := 0
-## 起点块内玩家的出生偏移（相对起点块原点，原点位于脚底）。
-@export var player_spawn_offset := Vector2(56, 152)
+## 起点块内玩家的出生偏移（相对起点块原点，原点位于脚底）；默认山脚正中心。
+@export var player_spawn_offset := Vector2(160, 152)
 
 @export_group("场景引用")
 @export var chunks_container: Node2D

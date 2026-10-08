@@ -46,5 +46,21 @@ func _activate() -> void:
 	if _player_inside and _player_inside.has_method("set_spawn_point"):
 		_player_inside.set_spawn_point(global_position + respawn_offset)
 
+	# 存档后相机下边界上移到本区块底部：从这里往下坠落会判定死亡。
+	var chunk := _find_own_chunk()
+	var rig := get_tree().get_first_node_in_group(CameraRig.CAMERA_GROUP)
+	if chunk != null and rig != null and rig.has_method("set_bottom_limit"):
+		rig.set_bottom_limit(chunk.global_position.y + chunk.chunk_size.y)
+
+
+## 篝火自身所在的区块。
+func _find_own_chunk() -> Chunk:
+	var node := get_parent()
+	while node != null:
+		if node is Chunk:
+			return node
+		node = node.get_parent()
+	return null
+
 func _is_player(body: Node2D) -> bool:
 	return body is CharacterBody2D and body.has_method("die")
